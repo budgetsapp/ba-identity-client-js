@@ -10,6 +10,9 @@ module.exports = {
   output: {
     filename: 'ba-auth-api-client.js',
     path: BUILD_DIR,
+
+    library: 'BaAuthApiClient',
+    libraryExport: 'default',
     libraryTarget: 'umd',
 
     // globalObject: 'this' is required here, see article
@@ -25,12 +28,6 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: [
-              '@babel/plugin-proposal-class-properties',
-              // the 'transform-runtime' plugin tells Babel to
-              // require the runtime instead of inlining it.
-              '@babel/plugin-transform-runtime',
-            ],
           },
         },
       },
