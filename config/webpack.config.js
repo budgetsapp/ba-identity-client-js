@@ -5,8 +5,7 @@ const BUILD_DIR = path.resolve(__dirname, '../dist');
 
 module.exports = {
   entry: './src/index.js', // relative to root
-  // mode: 'production',
-  mode: 'development',
+  mode: 'production', // mode: 'development',
   output: {
     filename: 'ba-auth-api-client.js',
     path: BUILD_DIR,

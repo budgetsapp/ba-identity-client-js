@@ -12,7 +12,11 @@ export class AuthApiClient {
     return getTokens(fullUrl);
   }
 
-  hello() {
-    return `Hello, World! Server URL: ${this.serverUrl}`;
+  refreshToken() {
+    throw new Error('Not implemented');
+  }
+
+  register() {
+    throw new Error('Not implemented');
   }
 }

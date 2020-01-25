@@ -3,4 +3,9 @@ var BaAuthApiClient = require('../dist/ba-auth-api-client');
 var URL = 'https://localhost';
 var client = new BaAuthApiClient(URL);
 
-console.log('Response', client.hello());
+try {
+  client.refreshToken();
+  console.log('Response', client.refreshToken());
+} catch (e) {
+  console.log('Error');
+}
