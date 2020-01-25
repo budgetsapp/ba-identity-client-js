@@ -1,0 +1,36 @@
+{
+  "name": "ba-auth-api-client",
+  "version": "1.0.0",
+  "description": "Client for BA Auth API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch --config ./config/webpack.config.js",
+    "build": "webpack --config ./config/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/budgetsapp/ba-auth-api-client.git"
+  },
+  "keywords": [
+    "auth"
+  ],
+  "author": "Vadim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/budgetsapp/ba-auth-api-client/issues"
+  },
+  "homepage": "https://github.com/budgetsapp/ba-auth-api-client#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/runtime": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^6.8.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
