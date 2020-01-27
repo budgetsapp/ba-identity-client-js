@@ -9,6 +9,7 @@ export class AuthApiClient {
   constructor(serverUrl, options) {
     this.serverUrl = serverUrl;
     this._storage = new Storage(options.storage);
+    this._timerId;
   }
 
   async _getTokens(login, password) {
@@ -31,18 +32,22 @@ export class AuthApiClient {
       { key: ACCESS_TOKEN_KEY, value: access_token },
       { key: REFRESH_TOKEN_KEY, value: refresh_token },
     ]);
+
     // 3. Decode token
     const data = extractDataFromToken(access_token);
 
     // 4. Run loop for refreshing
-    // console.log(data.valid_in_ms);
+    clearTimeout(this._timerId);
+    this._timerId = setTimeout(() => {
+      this.login(login, password);
+    }, m.valid_in_ms);
 
     return data;
   }
 
   logout() {
     // 1. Stop interval
-
+    clearTimeout(this._timerId);
     // 2. Remove items from local storage
     this._storage.removeItems([ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY]);
   }
