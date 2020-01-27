@@ -1,18 +1,30 @@
-export function setItem(key, value) {
-  localStorage.setItem(key, value);
-}
+export class Storage {
+  constructor(storage) {
+    this._storage = storage || localStorage;
+  }
 
-export function getItem(key, defaultValue) {
-  const value = localStorage.getItem(key);
-  return !!value ? value : defaultValue;
-}
+  setItem(key, value) {
+    this._storage.setItem(key, value);
+  }
 
-export function removeItem(key) {
-  localStorage.removeItem(key);
-}
+  setItems(items) {
+    items.forEach(item => {
+      this.setItem(item.key, item.value);
+    });
+  }
 
-export function removeItems(keys) {
-  keys.forEach(key => {
-    removeItem(key);
-  });
+  getItem(key, defaultValue) {
+    const value = this._storage.getItem(key);
+    return !!value ? value : defaultValue;
+  }
+
+  removeItem(key) {
+    this._storage.removeItem(key);
+  }
+
+  removeItems(keys) {
+    keys.forEach(key => {
+      this.removeItem(key);
+    });
+  }
 }
