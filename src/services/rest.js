@@ -7,12 +7,14 @@ export const get = fullUrl => {
   }).then(response => response.json());
 };
 
-export const post = (fullUrl, body) => {
-  return fetch(fullUrl, {
+export async function post(fullUrl, data) {
+  const response = await fetch(fullUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: body,
-  }).then(response => response.json());
-};
+    body: JSON.stringify(data),
+  });
+  const json = await response.json();
+  return json;
+}
