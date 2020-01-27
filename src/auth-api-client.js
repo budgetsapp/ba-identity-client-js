@@ -20,7 +20,7 @@ export class AuthApiClient {
     clearTimeout(this._timerId);
     this._timerId = setTimeout(async () => {
       await this._refreshToken();
-    }, 2000); //data.valid_in_ms);
+    }, data.valid_in_ms);
     return data;
   }
 
