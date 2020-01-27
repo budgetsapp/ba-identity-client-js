@@ -1,3 +1,3 @@
 export const getFullUrl = (serverUrl, url) => {
-  return [serverUrl, url].join('/');
+  return [serverUrl, url].join('');
 };
