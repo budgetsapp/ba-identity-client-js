@@ -3,8 +3,7 @@ import { getFullUrl } from './utils/path';
 import { GET_TOKENS_URL } from './const/urls';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './const/storage-keys';
 import { Storage } from './utils/storage';
-import { parseJwt } from './utils/token';
-import { secToMs } from './utils/time';
+import { extractDataFromToken } from './utils/token';
 
 export class AuthApiClient {
   constructor(serverUrl, options) {
@@ -33,13 +32,12 @@ export class AuthApiClient {
       { key: REFRESH_TOKEN_KEY, value: refresh_token },
     ]);
     // 3. Decode token
-    const parsedJwt = parseJwt(access_token);
-    // 4. Get validity in ms
-    const secondsValid = parsedJwt.exp - parsedJwt.iat;
-    const msValid = secToMs(secondsValid);
+    const data = extractDataFromToken(access_token);
 
-    return parsedJwt;
     // 4. Run loop for refreshing
+    // console.log(data.valid_in_ms);
+
+    return data;
   }
 
   logout() {
