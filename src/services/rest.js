@@ -1,11 +1,15 @@
-export const get = fullUrl => {
-  return fetch(fullUrl, {
+export async function get(fullUrl, options = {}) {
+  const headers = {
+    'Content-Type': 'application/json',
+    ...options.headers,
+  };
+  const response = await fetch(fullUrl, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.json());
-};
+    headers,
+  });
+  const json = await response.json();
+  return json;
+}
 
 export async function post(fullUrl, data) {
   const response = await fetch(fullUrl, {

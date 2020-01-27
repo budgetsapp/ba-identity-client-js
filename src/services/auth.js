@@ -6,3 +6,11 @@ export async function getTokens(fullUrl, login, password) {
     password,
   });
 }
+
+export async function refreshAccessToken(fullUrl, refreshToken) {
+  return await get(fullUrl, {
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  });
+}

@@ -6,11 +6,11 @@ var inMemoryStorage = {
   },
   setItem: (key, value) => {
     storage[key] = value;
-    console.log('Storage', storage);
+    // console.log('Storage', storage);
   },
   removeItem: key => {
     delete storage[key];
-    console.log('Storage', storage);
+    // console.log('Storage', storage);
   },
 };
 
