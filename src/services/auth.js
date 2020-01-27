@@ -1,5 +1,8 @@
-import { get } from './rest';
+import { get, post } from './rest';
 
-export const getTokens = fullUrl => {
-  return get(fullUrl);
-};
+export async function getTokens(fullUrl, login, password) {
+  return await post(fullUrl, {
+    login,
+    password,
+  });
+}
