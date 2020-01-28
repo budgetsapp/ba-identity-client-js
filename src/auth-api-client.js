@@ -76,4 +76,12 @@ export class AuthApiClient {
   register() {
     throw new Error('Not implemented');
   }
+
+  recoverPassword() {
+    throw new Error('Not implemented');
+  }
+
+  setPassword() {
+    throw new Error('Not implemented');
+  }
 }
