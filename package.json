@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "webpack --watch --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js",
-    "postinstall": "build"
+    "postinstall": "npm build"
   },
   "repository": {
     "type": "git",
