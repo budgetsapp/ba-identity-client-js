@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "webpack --watch --config ./config/webpack.config.js",
-    "build": "webpack --config ./config/webpack.config.js"
+    "build": "webpack --config ./config/webpack.config.js",
+    "postinstall": "build"
   },
   "repository": {
     "type": "git",

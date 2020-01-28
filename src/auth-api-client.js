@@ -92,6 +92,7 @@ export class AuthApiClient {
    * Registers new user
    */
   register() {
+    // Check login if it is free
     throw new Error('Not implemented');
   }
 
