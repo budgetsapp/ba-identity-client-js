@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "webpack --watch --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js",
-    "postinstall": "echo Hello World && npm run build"
+    "postinstall": "echo Building ba-auth-api-client... && npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,9 @@
     "url": "https://github.com/budgetsapp/ba-auth-api-client/issues"
   },
   "homepage": "https://github.com/budgetsapp/ba-auth-api-client#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "jwt-decode": "^2.2.0",
     "@babel/core": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
@@ -35,8 +37,5 @@
     "node-fetch": "^2.6.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
-  },
-  "dependencies": {
-    "jwt-decode": "^2.2.0"
   }
 }
