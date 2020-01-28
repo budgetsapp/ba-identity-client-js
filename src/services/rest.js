@@ -1,3 +1,9 @@
+/**
+ * Makes GET request
+ * @param   {string} fullUrl - full URL
+ * @param   {{ headers: Object }} options - additional options for the request
+ * @returns {Object} JSON object
+ */
 export async function get(fullUrl, options = {}) {
   const headers = {
     'Content-Type': 'application/json',
@@ -11,6 +17,12 @@ export async function get(fullUrl, options = {}) {
   return json;
 }
 
+/**
+ * Makes POST request
+ * @param   {string} fullUrl - full URL
+ * @param   {Object} data - data for POST
+ * @returns {Object} JSON object
+ */
 export async function post(fullUrl, data) {
   const response = await fetch(fullUrl, {
     method: 'POST',
