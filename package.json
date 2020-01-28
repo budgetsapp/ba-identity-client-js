@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "webpack --watch --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js",
-    "postinstall": "npm run build"
+    "postinstall": "echo Hello World && npm run build"
   },
   "repository": {
     "type": "git",
