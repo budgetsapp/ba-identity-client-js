@@ -5,7 +5,13 @@ import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './const/storage-keys';
 import { Storage } from './utils/storage';
 import { extractDataFromToken } from './utils/token';
 
+/** Class representing a auth API client */
 export class AuthApiClient {
+  /**
+   * Create a AuthApiClient
+   * @param {string} serverUrl - URL of the server to make requests
+   * @param {{ storage: Object }} options - additional options
+   */
   constructor(serverUrl, options) {
     this.serverUrl = serverUrl;
     this._storage = new Storage(options.storage);
@@ -47,6 +53,12 @@ export class AuthApiClient {
     }
   }
 
+  /**
+   * Logins user with credentials and saves tokens
+   * @param   {string} login - user's login
+   * @param   {string} password - user's password
+   * @returns {Promise<Object>} data extracted from the token
+   */
   async login(login, password) {
     console.debug('Start getting token');
     // 1. Get tokens
@@ -66,6 +78,9 @@ export class AuthApiClient {
     return data;
   }
 
+  /**
+   * Logs out user
+   */
   logout() {
     // 1. Stop interval
     clearTimeout(this._timerId);
@@ -73,14 +88,23 @@ export class AuthApiClient {
     this._storage.removeItems([ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY]);
   }
 
+  /**
+   * Registers new user
+   */
   register() {
     throw new Error('Not implemented');
   }
 
+  /**
+   * Recovers user's password
+   */
   recoverPassword() {
     throw new Error('Not implemented');
   }
 
+  /**
+   * Sets new user's password
+   */
   setPassword() {
     throw new Error('Not implemented');
   }
