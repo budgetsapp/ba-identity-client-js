@@ -38,14 +38,14 @@ export class AuthApiClient {
   async _refreshToken() {
     console.debug('Start refresh token');
     // 1. Get refresh token
-    const refresh_token = this._storage.getItem(REFRESH_TOKEN_KEY);
+    const refresh_token = await this._storage.getItem(REFRESH_TOKEN_KEY);
 
     if (refresh_token) {
       // 2. Get new access_token token from API call
       const fullUrl = getFullUrl(this.serverUrl, REFRESH_TOKEN_URL);
       const { access_token } = await refreshAccessToken(fullUrl, refresh_token);
       // 3. Save access_token
-      this._storage.setItem(ACCESS_TOKEN_KEY, access_token);
+      await this._storage.setItem(ACCESS_TOKEN_KEY, access_token);
       // 4. Run loop for refreshing
       this._setRefresh(access_token);
     } else {

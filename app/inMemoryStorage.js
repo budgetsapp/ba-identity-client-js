@@ -1,15 +1,23 @@
 var storage = {};
 
 var inMemoryStorage = {
-  getItem: key => {
-    return storage[key];
+  getItem: async key => {
+    return new Promise(function(resolve) {
+      resolve(storage[key]);
+    });
   },
-  setItem: (key, value) => {
-    storage[key] = value;
+  setItem: async (key, value) => {
+    return new Promsie(function(resolve) {
+      storage[key] = value;
+      resolve();
+    });
     // console.log('Storage', storage);
   },
   removeItem: key => {
-    delete storage[key];
+    return new Promsie(function(resolve) {
+      delete storage[key];
+      resolve();
+    });
     // console.log('Storage', storage);
   },
 };

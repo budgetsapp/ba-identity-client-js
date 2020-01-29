@@ -2,8 +2,10 @@ import { Storage } from './storage';
 
 let _storage = {};
 const inMemoryStorage = {
-  getItem: key => {
-    return _storage[key];
+  getItem: async key => {
+    return new Promise(resolve => {
+      resolve(_storage[key]);
+    });
   },
   setItem: (key, value) => {
     _storage[key] = value;
@@ -21,10 +23,10 @@ describe('storage', () => {
     storage = new Storage(inMemoryStorage);
   });
 
-  test('should set item correctly', () => {
+  test('should set item correctly', async () => {
     const key = 'itemKey';
     const value = 'itemValue';
-    storage.setItem(key, value);
+    await storage.setItem(key, value);
     const valueFromStorage = _storage[key];
     expect(valueFromStorage).toBe(value);
   });
@@ -45,29 +47,35 @@ describe('storage', () => {
     expect(_storage[items[1].key]).toBe(items[1].value);
   });
 
-  test('should get item correctly', () => {
+  test('should not get item if not item saved', async () => {
+    const key = 'itemKey';
+    const valueFromStorage = await storage.getItem(key);
+    expect(valueFromStorage).not.toBeDefined();
+  });
+
+  test('should get item correctly', async () => {
     const key = 'itemKey';
     const value = 'itemValue';
     _storage[key] = value;
-    const valueFromStorage = storage.getItem(key);
+    const valueFromStorage = await storage.getItem(key);
     expect(valueFromStorage).toBe(value);
   });
 
-  test('should get default item correctly', () => {
+  test('should get default item correctly', async () => {
     const key = 'itemKey';
     const defaultValue = 'defaultItemValue';
-    const valueFromStorage = storage.getItem(key, defaultValue);
+    const valueFromStorage = await storage.getItem(key, defaultValue);
     expect(valueFromStorage).toBe(defaultValue);
   });
 
-  test('should remove item correctly', () => {
+  test('should remove item correctly', async () => {
     const key = 'itemKey';
     const value = 'itemValue';
-    storage.setItem(key, value);
-    expect(storage.getItem(key)).toBe(value);
+    await storage.setItem(key, value);
+    expect(_storage[key]).toBe(value);
 
-    storage.removeItem(key);
-    expect(storage.getItem(key)).not.toBeDefined();
+    await storage.removeItem(key);
+    expect(_storage[key]).not.toBeDefined();
   });
 
   test('should remove array of items correctly', () => {
@@ -82,11 +90,11 @@ describe('storage', () => {
       },
     ];
     storage.setItems(items);
-    expect(storage.getItem(items[0].key)).toBe(items[0].value);
-    expect(storage.getItem(items[1].key)).toBe(items[1].value);
+    expect(_storage[items[0].key]).toBe(items[0].value);
+    expect(_storage[items[1].key]).toBe(items[1].value);
 
     storage.removeItems(items.map(i => i.key));
-    expect(storage.getItem(items[0].key)).not.toBeDefined();
-    expect(storage.getItem(items[1].key)).not.toBeDefined();
+    expect(_storage[items[0].key]).not.toBeDefined();
+    expect(_storage[items[1].key]).not.toBeDefined();
   });
 });

@@ -13,8 +13,8 @@ export class Storage {
    * @param  {string} key - key of the item
    * @param  {string} value - value of the item
    */
-  setItem(key, value) {
-    this._storage.setItem(key, value);
+  async setItem(key, value) {
+    await this._storage.setItem(key, value);
   }
 
   /**
@@ -22,8 +22,8 @@ export class Storage {
    * @param  {{key: string, value: string}[]} items - items to save
    */
   setItems(items) {
-    items.forEach(item => {
-      this.setItem(item.key, item.value);
+    items.forEach(async item => {
+      await this.setItem(item.key, item.value);
     });
   }
 
@@ -33,8 +33,8 @@ export class Storage {
    * @param   {string} defaultValue - default value that will be returned
    * @returns {string} value from storage
    */
-  getItem(key, defaultValue) {
-    const value = this._storage.getItem(key);
+  async getItem(key, defaultValue) {
+    const value = await this._storage.getItem(key);
     return !!value ? value : defaultValue;
   }
 
@@ -42,8 +42,8 @@ export class Storage {
    * Removes item from the storage
    * @param   {string} key - key of the item to remove
    */
-  removeItem(key) {
-    this._storage.removeItem(key);
+  async removeItem(key) {
+    await this._storage.removeItem(key);
   }
 
   /**
@@ -51,8 +51,8 @@ export class Storage {
    * @param  {string[]} keys - item keys to remove
    */
   removeItems(keys) {
-    keys.forEach(key => {
-      this.removeItem(key);
+    keys.forEach(async key => {
+      await this.removeItem(key);
     });
   }
 }
