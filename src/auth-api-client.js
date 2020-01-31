@@ -92,7 +92,7 @@ export class AuthApiClient {
    * Registers new user
    */
   register() {
-    // Check login if it is free
+    // Check login if it is free on server side
     throw new Error('Not implemented');
   }
 
@@ -107,6 +107,20 @@ export class AuthApiClient {
    * Sets new user's password
    */
   setPassword() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * Add new role to the user, only admins are allowed to invoke it
+   */
+  addRole() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * Removes the role from the user, only admins are allowed to invoke it
+   */
+  removeRole() {
     throw new Error('Not implemented');
   }
 }
