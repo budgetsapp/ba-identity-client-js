@@ -9,3 +9,14 @@ export function secToMs(sec) {
   }
   return sec * 1000;
 }
+
+/**
+ * Gets refresh timer, which should be less than expiration time
+ * @export
+ * @param {number} expiration - Token expiration time
+ * @param {number} [divider=5] - Divide expiration time to make refresh more often
+ * @returns {number} refresh interval
+ */
+export function getRefreshInterval(expiration, divider = 5) {
+  return Math.round(expiration / divider);
+}
