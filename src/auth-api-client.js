@@ -8,7 +8,6 @@ import {
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './const/storage-keys';
 import { Storage } from './utils/storage';
 import { extractDataFromToken } from './utils/token';
-import { getRefreshInterval } from './utils/time';
 import debug from 'debug';
 
 const log = debug(AUTH_API_CLIENT_MODULE_NAME);
@@ -32,8 +31,9 @@ export class AuthApiClient {
 
     // 2. Run loop for refreshing
     clearTimeout(this._timerId);
-    this._timerId = setTimeout(async () => {
-      await this._refreshToken();
+    this._timerId = setTimeout(() => {
+      this._refreshToken();
+      alert('Hello');
     }, TOKEN_REFRESH_INTERVAL_MS);
     return data;
   }
