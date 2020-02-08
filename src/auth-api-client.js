@@ -1,10 +1,17 @@
 import { getTokens, refreshAccessToken } from './services/auth';
 import { getFullUrl } from './utils/path';
 import { GET_TOKENS_URL, REFRESH_TOKEN_URL } from './const/urls';
+import {
+  AUTH_API_CLIENT_MODULE_NAME,
+  TOKEN_REFRESH_INTERVAL_MS,
+} from './const/app';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './const/storage-keys';
 import { Storage } from './utils/storage';
 import { extractDataFromToken } from './utils/token';
 import { getRefreshInterval } from './utils/time';
+import debug from 'debug';
+
+const log = debug(AUTH_API_CLIENT_MODULE_NAME);
 
 /** Class representing a auth API client */
 export class AuthApiClient {
@@ -27,7 +34,7 @@ export class AuthApiClient {
     clearTimeout(this._timerId);
     this._timerId = setTimeout(async () => {
       await this._refreshToken();
-    }, getRefreshInterval(data.valid_in_ms));
+    }, TOKEN_REFRESH_INTERVAL_MS);
     return data;
   }
 
@@ -37,7 +44,7 @@ export class AuthApiClient {
   }
 
   async _refreshToken() {
-    console.debug('Start refresh token');
+    log('Refreshing token');
     // 1. Get refresh token
     const refresh_token = await this._storage.getItem(REFRESH_TOKEN_KEY);
 
@@ -61,7 +68,7 @@ export class AuthApiClient {
    * @returns {Promise<Object>} data extracted from the token
    */
   async login(login, password) {
-    console.debug('Start getting token');
+    log('Logging in');
     // 1. Get tokens
     const { access_token, refresh_token } = await this._getTokens(
       login,
