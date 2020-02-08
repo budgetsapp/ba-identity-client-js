@@ -33,7 +33,6 @@ export class AuthApiClient {
     clearTimeout(this._timerId);
     this._timerId = setTimeout(() => {
       this._refreshToken();
-      alert('Hello');
     }, TOKEN_REFRESH_INTERVAL_MS);
     return data;
   }
