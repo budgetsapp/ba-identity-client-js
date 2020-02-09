@@ -22,19 +22,17 @@ export class AuthApiClient {
   constructor(serverUrl, options) {
     this.serverUrl = serverUrl;
     this._storage = new Storage(options.storage);
+    this._refreshInterval_MS =
+      options.refreshInterval_MS || TOKEN_REFRESH_INTERVAL_MS;
     this._timerId;
   }
 
-  _setRefresh(access_token) {
-    // 1. Decode token
-    const data = extractDataFromToken(access_token);
-
-    // 2. Run loop for refreshing
+  autoUpdateToken() {
+    // Run loop for refreshing
     clearTimeout(this._timerId);
-    this._timerId = setTimeout(() => {
+    this._timerId = setInterval(() => {
       this._refreshToken();
-    }, TOKEN_REFRESH_INTERVAL_MS);
-    return data;
+    }, this._refreshInterval_MS);
   }
 
   async _getTokens(login, password) {
@@ -53,10 +51,9 @@ export class AuthApiClient {
       const { access_token } = await refreshAccessToken(fullUrl, refresh_token);
       // 3. Save access_token
       await this._storage.setItem(ACCESS_TOKEN_KEY, access_token);
-      // 4. Run loop for refreshing
-      this._setRefresh(access_token);
     } else {
-      throw new Error('No refresh token found');
+      clearTimeout(this._timerId);
+      log('No refresh token found');
     }
   }
 
@@ -79,9 +76,8 @@ export class AuthApiClient {
       { key: REFRESH_TOKEN_KEY, value: refresh_token },
     ]);
 
-    // 3. Run loop for refreshing
-    const data = this._setRefresh(access_token);
-
+    this.autoUpdateToken();
+    const data = extractDataFromToken(access_token);
     return data;
   }
 
