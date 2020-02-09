@@ -28,7 +28,7 @@ export function extractDataFromToken(accessToken) {
  * Returns if refresh token is expired
  * @returns {boolean} if refresh token is expired or not
  */
-export function isRefreshTokenExpired() {
+export function isRefreshTokenExpired(refresh_token) {
   const data = parseJwt(refresh_token);
   const isExpired = Date.now() >= new Date(data.exp * 1000);
   return isExpired;
