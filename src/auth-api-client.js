@@ -57,12 +57,20 @@ export class AuthApiClient {
     }
   }
 
-  async isRefreshTokenExpired() {
+  async isRefreshTokenExpiredAsync() {
     const refresh_token = await this._storage.getItem(REFRESH_TOKEN_KEY);
     if (refresh_token) {
       return isRefreshTokenExpired(refresh_token);
     } else {
-      return null;
+      return true;
+    }
+  }
+
+  isRefreshTokenExpired(refresh_token) {
+    if (refresh_token) {
+      return isRefreshTokenExpired(refresh_token);
+    } else {
+      return true;
     }
   }
 
