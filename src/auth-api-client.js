@@ -7,7 +7,7 @@ import {
 } from './const/app';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './const/storage-keys';
 import { Storage } from './utils/storage';
-import { extractDataFromToken } from './utils/token';
+import { extractDataFromToken, isRefreshTokenExpired } from './utils/token';
 import debug from 'debug';
 
 const log = debug(AUTH_API_CLIENT_MODULE_NAME);
@@ -54,6 +54,15 @@ export class AuthApiClient {
     } else {
       clearTimeout(this._timerId);
       log('No refresh token found');
+    }
+  }
+
+  async isRefreshTokenExpired() {
+    const refresh_token = await this._storage.getItem(REFRESH_TOKEN_KEY);
+    if (refresh_token) {
+      return isRefreshTokenExpired(refresh_token);
+    } else {
+      return null;
     }
   }
 

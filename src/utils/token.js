@@ -23,3 +23,13 @@ export function extractDataFromToken(accessToken) {
     valid_in_ms: secToMs(parsedToken.exp - parsedToken.iat),
   };
 }
+
+/**
+ * Returns if refresh token is expired
+ * @returns {boolean} if refresh token is expired or not
+ */
+export function isRefreshTokenExpired() {
+  const data = parseJwt(refresh_token);
+  const isExpired = Date.now() >= new Date(data.exp * 1000);
+  return isExpired;
+}
