@@ -57,15 +57,11 @@ export class AuthApiClient {
     }
   }
 
-  async isRefreshTokenExpiredAsync() {
-    const refresh_token = await this._storage.getItem(REFRESH_TOKEN_KEY);
-    if (refresh_token) {
-      return isRefreshTokenExpired(refresh_token);
-    } else {
-      return true;
-    }
-  }
-
+  /**
+   * Returns if refresh token is expired
+   * @param {string} refresh_token - Refresh token
+   * @returns if refresh token is expired
+   */
   isRefreshTokenExpired(refresh_token) {
     if (refresh_token) {
       return isRefreshTokenExpired(refresh_token);
@@ -75,7 +71,7 @@ export class AuthApiClient {
   }
 
   /**
-   * Logins user with credentials and saves tokens
+   * Logs in user with credentials and saves tokens
    * @param   {string} login - user's login
    * @param   {string} password - user's password
    * @returns {Promise<Object>} data extracted from the token
