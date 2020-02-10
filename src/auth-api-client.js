@@ -21,12 +21,45 @@ export class AuthApiClient {
    */
   constructor(serverUrl, options) {
     this.serverUrl = serverUrl;
+    this._timerId;
+    // options
     this._storage = new Storage(options.storage);
     this._refreshInterval_MS =
       options.refreshInterval_MS || TOKEN_REFRESH_INTERVAL_MS;
-    this._timerId;
+    this._tokensUpdatedCallback =
+      options.tokensUpdatedCallback || function() {};
   }
 
+  /**
+   * Sets tokensUpdatedCallback
+   * @param {function} callback
+   */
+  setTokensUpdatedCallback(callback) {
+    this._tokensUpdatedCallback = callback;
+  }
+
+  /**
+   * Runs tokens updated callback
+   * @private
+   * @param {string} accessToken
+   * @param {string} refreshToken
+   */
+  _runTokensUpdatedCallback(accessToken, refreshToken) {
+    if (typeof this._tokensUpdatedCallback !== 'function') {
+      throw new Error('tokensUpdatedCallback is not a function');
+    } else {
+      const data = {
+        accessToken,
+        refreshToken,
+        data: accessToken ? extractDataFromToken(accessToken) : {},
+      };
+      this._tokensUpdatedCallback(data);
+    }
+  }
+
+  /**
+   *  Auto updates tokens
+   */
   autoUpdateToken() {
     // Run loop for refreshing
     clearTimeout(this._timerId);
@@ -35,6 +68,13 @@ export class AuthApiClient {
     }, this._refreshInterval_MS);
   }
 
+  /**
+   * Makes API call to get tokens
+   * @private
+   * @param {string} login - user's login
+   * @param {string} password - user's password
+   * @returns {{access_token: string, refresh_token: string}} tokens
+   */
   async _getTokens(login, password) {
     const fullUrl = getFullUrl(this.serverUrl, GET_TOKENS_URL);
     return await getTokens(fullUrl, login, password);
@@ -48,12 +88,19 @@ export class AuthApiClient {
     if (refresh_token) {
       // 2. Get new access_token token from API call
       const fullUrl = getFullUrl(this.serverUrl, REFRESH_TOKEN_URL);
-      const { access_token } = await refreshAccessToken(fullUrl, refresh_token);
+      const { access_token, refresh_token } = await refreshAccessToken(
+        fullUrl,
+        refresh_token
+      );
       // 3. Save access_token
-      await this._storage.setItem(ACCESS_TOKEN_KEY, access_token);
+      this._storage.setItems([
+        { key: ACCESS_TOKEN_KEY, value: access_token },
+        { key: REFRESH_TOKEN_KEY, value: refresh_token },
+      ]);
+      this._runTokensUpdatedCallback(access_token, refresh_token);
     } else {
-      clearTimeout(this._timerId);
       log('No refresh token found');
+      this._runTokensUpdatedCallback('', '');
     }
   }
 
@@ -89,9 +136,7 @@ export class AuthApiClient {
       { key: REFRESH_TOKEN_KEY, value: refresh_token },
     ]);
 
-    this.autoUpdateToken();
-    const data = extractDataFromToken(access_token);
-    return data;
+    this._runTokensUpdatedCallback(access_token, refresh_token);
   }
 
   /**

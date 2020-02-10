@@ -1,4 +1,4 @@
-import { secToMs, getRefreshInterval } from './time';
+import { secToMs } from './time';
 
 describe('secToMs', () => {
   test('should convert ms to sec correctly', () => {
@@ -25,13 +25,5 @@ describe('secToMs', () => {
       secToMs(null);
     }
     expect(callSecToMs).toThrowError('Incorrect sec value passed');
-  });
-});
-
-describe('getRefreshInterval', () => {
-  test('should return correct interval', () => {
-    const actualResult = getRefreshInterval(15, 5);
-    const expectedResult = 3;
-    expect(actualResult).toBe(expectedResult);
   });
 });
