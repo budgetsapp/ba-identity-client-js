@@ -83,9 +83,11 @@ export class AuthApiClient {
   async _refreshToken() {
     log('Refreshing token');
     // 1. Get refresh token
-    const refresh_token = await this._storage.getItem(REFRESH_TOKEN_KEY);
+    const refreshTokenFromStorage = await this._storage.getItem(
+      REFRESH_TOKEN_KEY
+    );
 
-    if (refresh_token) {
+    if (refreshTokenFromStorage) {
       // 2. Get new access_token token from API call
       const fullUrl = getFullUrl(this.serverUrl, REFRESH_TOKEN_URL);
       const { access_token, refresh_token } = await refreshAccessToken(
