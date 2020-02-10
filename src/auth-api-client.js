@@ -63,8 +63,8 @@ export class AuthApiClient {
   autoUpdateToken() {
     // Run loop for refreshing
     clearTimeout(this._timerId);
-    this._timerId = setInterval(() => {
-      this._refreshToken();
+    this._timerId = setInterval(async () => {
+      await this._refreshToken();
     }, this._refreshInterval_MS);
   }
 
