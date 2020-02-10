@@ -93,7 +93,7 @@ export class AuthApiClient {
       const fullUrl = getFullUrl(this.serverUrl, REFRESH_TOKEN_URL);
       const { access_token, refresh_token } = await refreshAccessToken(
         fullUrl,
-        refresh_token
+        refreshTokenFromStorage
       );
       // 3. Save access_token
       this._storage.setItems([
