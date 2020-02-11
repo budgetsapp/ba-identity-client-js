@@ -19,10 +19,13 @@ export class AuthApiClient {
    * @param {string} serverUrl - URL of the server to make requests
    * @param {{ storage: Object }} options - additional options
    */
-  constructor(serverUrl, options) {
-    this.serverUrl = serverUrl;
+  constructor(options) {
     this._timerId;
     // options
+    this._serverUrl = options.serverUrl;
+    if (!this._serverUrl) {
+      throw new Error('No server URL provided');
+    }
     this._storage = new Storage(options.storage);
     this._refreshInterval_MS =
       options.refreshInterval_MS || TOKEN_REFRESH_INTERVAL_MS;
