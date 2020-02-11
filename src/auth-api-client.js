@@ -16,7 +16,6 @@ const log = debug(AUTH_API_CLIENT_MODULE_NAME);
 export class AuthApiClient {
   /**
    * Create a AuthApiClient
-   * @param {string} serverUrl - URL of the server to make requests
    * @param {{ storage: Object }} options - additional options
    */
   constructor(options) {
@@ -82,7 +81,7 @@ export class AuthApiClient {
    * @returns {{access_token: string, refresh_token: string}} tokens
    */
   async _getTokens(login, password) {
-    const fullUrl = getFullUrl(this.serverUrl, GET_TOKENS_URL);
+    const fullUrl = getFullUrl(this._serverUrl, GET_TOKENS_URL);
     return await getTokens(fullUrl, login, password);
   }
 
@@ -95,7 +94,7 @@ export class AuthApiClient {
 
     if (refreshTokenFromStorage) {
       // 2. Get new access_token token from API call
-      const fullUrl = getFullUrl(this.serverUrl, REFRESH_TOKEN_URL);
+      const fullUrl = getFullUrl(this._serverUrl, REFRESH_TOKEN_URL);
       try {
         const { access_token } = await refreshAccessToken(
           fullUrl,
