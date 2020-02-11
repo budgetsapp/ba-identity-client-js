@@ -147,6 +147,7 @@ export class AuthApiClient {
     clearTimeout(this._timerId);
     // 2. Remove items from local storage
     this._storage.removeItems([ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY]);
+    this._runTokensUpdatedCallback('', '');
   }
 
   /**
