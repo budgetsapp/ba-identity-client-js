@@ -60,10 +60,12 @@ export class AuthApiClient {
   /**
    *  Auto updates tokens
    */
-  autoUpdateToken() {
+  autoUpdateToken(runImmediately = false) {
     // Run loop for refreshing
     clearTimeout(this._timerId);
-    this._refreshToken(); // run immediately
+    if (runImmediately) {
+      this._refreshToken();
+    }
     this._timerId = setInterval(() => {
       this._refreshToken();
     }, this._refreshInterval_MS);
