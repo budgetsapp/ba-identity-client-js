@@ -91,13 +91,18 @@ export class AuthApiClient {
     if (refreshTokenFromStorage) {
       // 2. Get new access_token token from API call
       const fullUrl = getFullUrl(this.serverUrl, REFRESH_TOKEN_URL);
-      const { access_token } = await refreshAccessToken(
-        fullUrl,
-        refreshTokenFromStorage
-      );
-      // 3. Save access_token
-      this._storage.setItem(ACCESS_TOKEN_KEY, access_token);
-      this._runTokensUpdatedCallback(access_token, refreshTokenFromStorage);
+      try {
+        const { access_token } = await refreshAccessToken(
+          fullUrl,
+          refreshTokenFromStorage
+        );
+        // 3. Save access_token
+        this._storage.setItem(ACCESS_TOKEN_KEY, access_token);
+        this._runTokensUpdatedCallback(access_token, refreshTokenFromStorage);
+      } catch (e) {
+        log('Failed to refresh tokens');
+        this._runTokensUpdatedCallback('', refreshTokenFromStorage);
+      }
     } else {
       log('No refresh token found');
       this._runTokensUpdatedCallback('', '');
