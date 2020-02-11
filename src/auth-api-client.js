@@ -101,11 +101,11 @@ export class AuthApiClient {
         this._runTokensUpdatedCallback(access_token, refreshTokenFromStorage);
       } catch (e) {
         log('Failed to refresh tokens');
-        this._runTokensUpdatedCallback('', refreshTokenFromStorage);
+        this._runTokensUpdatedCallback(null, refreshTokenFromStorage);
       }
     } else {
       log('No refresh token found');
-      this._runTokensUpdatedCallback('', '');
+      this._runTokensUpdatedCallback(null, null);
     }
   }
 
@@ -152,7 +152,7 @@ export class AuthApiClient {
     clearTimeout(this._timerId);
     // 2. Remove items from local storage
     this._storage.removeItems([ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY]);
-    this._runTokensUpdatedCallback('', '');
+    this._runTokensUpdatedCallback(null, null);
   }
 
   /**
