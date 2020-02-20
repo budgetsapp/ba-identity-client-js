@@ -1,27 +1,28 @@
 {
-  "name": "ba-auth-api-client",
+  "name": "ba-identity-client-js",
   "version": "1.0.0",
-  "description": "Client for BA Auth API",
-  "main": "index.js",
+  "description": "JS client library for BA Identity",
+  "main": "./src/index.js",
   "scripts": {
     "test": "jest",
     "start": "webpack --watch --config ./config/webpack.config.js",
     "build": "webpack --config ./config/webpack.config.js",
-    "postinstall": "echo Building ba-auth-api-client... && npm run build"
+    "postinstall": "echo Building ba-identity-client-js... && yarn run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/budgetsapp/ba-auth-api-client.git"
+    "url": "git+https://github.com/budgetsapp/ba-identity-client-js.git"
   },
   "keywords": [
-    "auth"
+    "auth",
+    "identity"
   ],
-  "author": "Vadim",
+  "author": "vadimkorr",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/budgetsapp/ba-auth-api-client/issues"
+    "url": "https://github.com/budgetsapp/ba-identity-client-js/issues"
   },
-  "homepage": "https://github.com/budgetsapp/ba-auth-api-client#readme",
+  "homepage": "https://github.com/budgetsapp/ba-identity-client-js",
   "devDependencies": {},
   "dependencies": {
     "@babel/core": "^7.8.3",

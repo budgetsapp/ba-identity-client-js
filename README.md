@@ -1,2 +1,3 @@
-# ba-auth-api-client
-JS client for ba-auth-api
+# ba-identity-client-js
+
+JS client library for BA Identity

@@ -1,16 +1,19 @@
-var BaAuthApiClient = require('../dist/ba-auth-api-client');
+var BaIdentityClient = require('../dist');
 var inMemoryStorage = require('./inMemoryStorage');
 
-var URL = 'http://127.0.0.1:5011';
-var client = new BaAuthApiClient(URL, {
+var client = new BaIdentityClient({
   storage: inMemoryStorage,
+  serverUrl: 'http://127.0.0.1:5011',
+  refreshInterval_MS: 5000,
+  tokensUpdatedCallback: data => {
+    console.log(data);
+  },
 });
 
 // try {
-//   client.refreshToken();
-//   console.log('Response', client.refreshToken());
+//   client.autoUpdateToken();
 // } catch (e) {
-//   console.log('Error');
+//   console.log('Error', e);
 // }
 
 var done = false;
@@ -24,9 +27,8 @@ global.fetch = require('node-fetch');
 
 client
   .login('ba-user-1', 'ba-password')
-  .then(res => {
-    console.log(res);
-    done = true;
+  .then(() => {
+    // done = true;
   })
   .catch(e => {
     console.log('Error', e);

@@ -2,7 +2,7 @@ import { getTokens, refreshAccessToken } from './services/auth';
 import { getFullUrl } from './utils/path';
 import { GET_TOKENS_URL, REFRESH_TOKEN_URL } from './const/urls';
 import {
-  AUTH_API_CLIENT_MODULE_NAME,
+  IDENTITY_CLIENT_MODULE_NAME,
   TOKEN_REFRESH_INTERVAL_MS,
 } from './const/app';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './const/storage-keys';
@@ -10,13 +10,17 @@ import { Storage } from './utils/storage';
 import { extractDataFromToken, isRefreshTokenExpired } from './utils/token';
 import debug from 'debug';
 
-const log = debug(AUTH_API_CLIENT_MODULE_NAME);
+const log = debug(IDENTITY_CLIENT_MODULE_NAME);
 
-/** Class representing a auth API client */
-export class AuthApiClient {
+/** Class representing a BaIdentityClient */
+export class BaIdentityClient {
   /**
-   * Create a AuthApiClient
-   * @param {{ storage: Object }} options - additional options
+   * Creates a BaIdentityClient
+   * @param {Object} options - options
+   * @param {Object} options.storage - Storage access.
+   * @param {string} options.serverUrl - Server URL.
+   * @param {number} options.refreshInterval_MS - Token refresh interval in ms.
+   * @param {function} options.tokensUpdatedCallback - Callback called on token updated.
    */
   constructor(options) {
     this._timerId;

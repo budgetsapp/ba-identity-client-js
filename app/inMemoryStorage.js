@@ -7,14 +7,14 @@ var inMemoryStorage = {
     });
   },
   setItem: async (key, value) => {
-    return new Promsie(function(resolve) {
+    return new Promise(function(resolve) {
       storage[key] = value;
       resolve();
     });
     // console.log('Storage', storage);
   },
   removeItem: key => {
-    return new Promsie(function(resolve) {
+    return new Promise(function(resolve) {
       delete storage[key];
       resolve();
     });

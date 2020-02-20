@@ -1,2 +1,2 @@
-export const AUTH_API_CLIENT_MODULE_NAME = 'Auth-API';
+export const IDENTITY_CLIENT_MODULE_NAME = 'BaIdentityClientJs';
 export const TOKEN_REFRESH_INTERVAL_MS = 60000;

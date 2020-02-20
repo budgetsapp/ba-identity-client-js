@@ -4,13 +4,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BUILD_DIR = path.resolve(__dirname, '../dist');
 
 module.exports = {
-  entry: './index.js', // relative to root
+  entry: './src/index.js', // relative to root
   mode: 'production', // mode: 'development',
   output: {
-    filename: 'ba-auth-api-client.js',
+    filename: 'index.js',
     path: BUILD_DIR,
 
-    library: 'BaAuthApiClient',
+    library: 'ba-identity-client-js',
     libraryExport: 'default',
     libraryTarget: 'umd',
 
