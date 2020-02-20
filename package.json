@@ -2,7 +2,7 @@
   "name": "ba-identity-client-js",
   "version": "1.0.0",
   "description": "JS client library for BA Identity",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
     "start": "webpack --watch --config ./config/webpack.config.js",
